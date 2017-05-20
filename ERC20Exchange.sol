@@ -50,6 +50,12 @@ contract ERC20Exchange is ERC20ExchangeType {
          denominator = tokenRates[from].hardRatio.denominator*tokenRates[to].hardRatio.numerator;
     }
     
+     //method to initiate and update the TokenRate mappings through an ACL    
+    function updateToken(address tokenAddress, uint numerator, uint denominator) {
+        //ACL through custom modifier
+        tokenRates[tokenAddress] = TokenRate(tokenAddress, Decimal(numerator, denominator));
+    }
+    
 }
 
 
