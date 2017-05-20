@@ -37,25 +37,39 @@ contract ERC20ExchangeType {
 contract ERC20Exchange is ERC20ExchangeType {
     /* this should hold the hardcoding of token reference (Address for now) and a ratio */
     struct TokenRate {
-        address token;
+        bytes32 token;
         Decimal hardRatio;
         
     }
-    mapping(address => TokenRate) tokenRates;
+    mapping(bytes32 => TokenRate) tokenRates;
     
    /* simple univeral ratio*/
     function getExchangeRate(address from, address to, bool weight) 
     constant returns (uint numerator, uint denominator){
-         numerator = tokenRates[from].hardRatio.numerator*tokenRates[to].hardRatio.denominator;
-         denominator = tokenRates[from].hardRatio.denominator*tokenRates[to].hardRatio.numerator;
+        
+        ERC20Interface eRC20InterfaceFrom  =  ERC20Interface(from);   
+         ERC20Interface eRC20InterfaceTo  =  ERC20Interface(from);   
+        
+         numerator = tokenRates[eRC20InterfaceFrom.symbol()].hardRatio.numerator*tokenRates[eRC20InterfaceTo.symbol()].hardRatio.denominator;
+         denominator = tokenRates[eRC20InterfaceFrom.symbol()].hardRatio.denominator*tokenRates[eRC20InterfaceTo.symbol()].hardRatio.numerator;
     }
     
-     //method to initiate and update the TokenRate mappings through an ACL    
+    //methods to initiate and update the TokenRate mappings through an ACL
+    
     function updateToken(address tokenAddress, uint numerator, uint denominator) {
+        ERC20Interface eRC20Interface  =  ERC20Interface(tokenAddress); 
         //ACL through custom modifier
-        tokenRates[tokenAddress] = TokenRate(tokenAddress, Decimal(numerator, denominator));
+        tokenRates[eRC20Interface.symbol()] = TokenRate(eRC20Interface.symbol(), Decimal(numerator, denominator));
     }
     
 }
 
+/* ERC interface just using the symbol */
+
+contract ERC20Interface {
+    //this is not as per definition, its of the type string - please change it
+    bytes32 public symbol = "CURR0";
+    
+
+}
 
