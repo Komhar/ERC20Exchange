@@ -59,4 +59,11 @@ contract ERC20Exchange is ERC20ExchangeType {
     
 }
 
+contract ERC20Interface {
+    //this is not as per definition, its of the type string - please change it
+    bytes32 public symbol = "CURR0";
+    
+
+}
+
 
