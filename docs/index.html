@@ -24,10 +24,13 @@
 		<h4>Various apps hosted by GST network providers will interact with GSTN APIs to execute tax transactions. This coin can be parallely cloud hosted to retain a transparent record of the GSTIN history of tax credit</h4>
 
 		<h2>Contract Methods</h2>
-			taxCreditTo
-			taxCreditFromTo
-			approveTaxCredit
-			allowCreditOnBehalf
+			<h3>addThisGstIn(address _subscriber, uint _encodedGstIn)</h3>
+			<h3>addGstIn(uint _encodedGstIn)</h3>
+			<h3>taxCreditTo(uint _gstin, uint _credit)</h3>
+			<h3>taxCreditFromTo(uint _from, uint _to, uint256 _value)</h3>
+			<h3>approveTaxCredit(uint _creditor, uint256 _value)</h3>
+			<h3>allowCreditOnBehalf(uint _creditor, uint _credited )</h3>
+			<h3>getCredit(uint _gstin)</h3>
 		
 		<!-- Scripts -->
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
