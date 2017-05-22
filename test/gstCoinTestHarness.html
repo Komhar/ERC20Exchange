@@ -1,0 +1,72 @@
+<html>
+<title>Gstn Coin Ledger</title>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+<!-- Get web3.js from https://github.com/ethereum/web3.js/ --> 
+<script src="web3.js"></script>	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+var Web3 = require('web3');
+var web3 = new Web3();
+//Connect to local/known ethereum go node
+web3.setProvider(new web3.providers.HttpProvider());
+web3.eth.defaultAccount = web3.eth.accounts[0];
+
+ var gstCoinContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"_creditor","type":"uint256"},{"name":"_value","type":"uint256"}],"name":"approveTaxCredit","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_gstin","type":"uint256"},{"name":"_credit","type":"uint256"}],"name":"taxCreditTo","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"uint256"},{"name":"_to","type":"uint256"},{"name":"_value","type":"uint256"}],"name":"taxCreditFromTo","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_subscriber","type":"address"},{"name":"_encodedGstIn","type":"uint256"}],"name":"addThisGstIn","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_gstin","type":"uint256"}],"name":"getCredit","outputs":[{"name":"credit","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_encodedGstIn","type":"uint256"}],"name":"addGstIn","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_creditor","type":"uint256"},{"name":"_credited","type":"uint256"}],"name":"allowCreditOnBehalf","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}]
+);
+//Update to the deployment address below, THIS WILL NOT WORK wih default 
+var corecontractContractInst = gstCoinContract
+			.at('0x1a0dd82ab0dd63691485a692425046625990fe64');
+function load(){
+	var testGstIn = [6347635476534,764786476,3434343242,334343421];
+	var testAddress = ['0x1a0dd82ab0dd63691485a692425046625990fe64', '0x004dc931de24d5c1c9e0b699c57c14ec6ac5550b','0xde557cf0419BD275174FCC508a461Be06459D9DB', '0x9f3ae1d603320980Bd7FD79EB6dF981d8A2A0e24'];
+	
+			
+          	for (i = 0; i < 4; i++) { 
+			corecontractContractInst.addThisGstIn(testGstnIn[i], testAddress[i]);
+    			
+		}
+
+
+	var table = document.getElementById("dataTable");		
+          	for (i = 0; i < 4; i++) { 
+			data = corecontractContractInst.getCredit(testGstnIn[i]);
+    			var row = table.insertRow(i+1);
+             		var cell1 = row.insertCell(0);
+         		var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			cell1.innerHTML = data[0];
+         		cell2.innerHTML = data[1];
+			cell3.innerHTML = data[2];
+			cell4.innerHTML = data[3];
+		}
+
+}
+
+
+</script>
+<body onload="load();">
+<br/>
+
+Create Credit Coin 
+<br/>
+<table>
+<tr>
+ <td>From:</td><td> <input type="text" name="from" id="from"></td></tr>
+  <tr><td>To:</td><td>  <input type="text" name="to" id="to"></td></tr>
+<tr><td>Amount:  </td><td><input type="text" name="amount" id="amount"></td></tr>
+<tr><td>timestamp :  </td><td><input type="text" name="ts" id="ts"></td></tr>
+</table>
+<input type="button" value = "create" onclick="create()"/>
+<div style='padding-bottom:30px;'><hr></div>
+	Credit Coin Ledger:
+ 	<table id="dataTable">
+            <th>From</th>
+            <th>To</th>
+ 	<th>Amount</th>
+	<th>Timestamp</th>
+         </table>
+         </div>
+</body>
+</html
