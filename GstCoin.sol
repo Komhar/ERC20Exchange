@@ -68,10 +68,23 @@ contract StandardToken is ERC20Token {
 contract GstCoin is StandardToken{
     
     /*
-    Base62 coersion of GSTIN format = State code + PAN +Entity reg number+Z + checksum
+    Base62 conversion of GSTIN format = State code + PAN +Entity reg number+Z + checksum
     
     */
     mapping(uint => address) gstinAddress; 
+    
+    /*
+    Add the @parame _encodedGstn to mapping keyed of the @param address
+    */
+    function addThisGstIn(address _subscriber, uint _encodedGstIn) returns (bool success) {
+        gstinAddress[_encodedGstIn] = _subscriber;
+        return true;
+    }
+    
+    function addGstIn(uint _encodedGstIn) returns (bool success) {
+        gstinAddress[_encodedGstIn] = msg.sender;
+        return true;
+    }
     
     function getCredit(uint _gstin) constant returns (uint credit) {
         credit = balanceOf(gstinAddress[_gstin]);
@@ -81,8 +94,8 @@ contract GstCoin is StandardToken{
         transfer(gstinAddress[_gstin], _credit);
     }
     
-    function taxCreditFromTo(uint _from, uint _to, uint256 _value) {
-        transferFrom(gstinAddress[_from], gstinAddress[_to], _value);
+    function taxCreditFromTo(uint _from, uint _to, uint256 _value) returns (bool success) {
+        return transferFrom(gstinAddress[_from], gstinAddress[_to], _value);
     }
     
     function approveTaxCredit(uint _creditor, uint256 _value) returns (bool success) {
@@ -91,8 +104,10 @@ contract GstCoin is StandardToken{
     }
     
     
-    function allowCreditOnBehalf(uint _creditor, uint _credited ) constant returns (uint256 remaining) {
+    function allowCreditOnBehalf(uint _creditor, uint _credited ) 
+    constant returns (uint256 remaining) {
         return allowance(gstinAddress[_creditor], gstinAddress[_credited]);
     }
 }
+
 

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Credit Coin - Credit Ledger</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<h1><img src="images/Logo.png"/>Credit Coin</h1>
+				<h2>A simple credit ledger smart contract</h2>
+				<p>Credit coin allows you to extend a provable credit line to your vendors and service providers. Credit coin is a liability balance with a repayment plan built into the coin. </p>
+				
+			</header>
+
+		<p>As a Lender - Create a foolproof way to lend money with a provable credit and trackable repayment.<br/>
+		As a Project Manager - Create a corpus plan with vendor/service provider credit which can will be recovered authomatically.<br/> 
+		As a borrower - Accept credit and maintain a planned repayment schedule</p>
+
+		<!-- Footer -->
+			
+
+		<!-- Scripts -->
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
