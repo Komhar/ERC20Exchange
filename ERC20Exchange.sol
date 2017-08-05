@@ -48,7 +48,7 @@ contract ERC20Exchange is ERC20ExchangeType {
     constant returns (uint numerator, uint denominator){
         
         ERC20Interface eRC20InterfaceFrom  =  ERC20Interface(from);   
-         ERC20Interface eRC20InterfaceTo  =  ERC20Interface(from);   
+         ERC20Interface eRC20InterfaceTo  =  ERC20Interface(to);   
         
          numerator = tokenRates[eRC20InterfaceFrom.symbol()].hardRatio.numerator*tokenRates[eRC20InterfaceTo.symbol()].hardRatio.denominator;
          denominator = tokenRates[eRC20InterfaceFrom.symbol()].hardRatio.denominator*tokenRates[eRC20InterfaceTo.symbol()].hardRatio.numerator;
